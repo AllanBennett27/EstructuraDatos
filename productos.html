@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Productos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="pedidos.html">Pedidos</a></li>
+    </ul>
+  </nav>
+
+  <h1>Gestión de Productos</h1>
+  <div class="section">
+    <input type="text" id="nombreProducto" placeholder="Nombre del producto">
+    <input type="number" id="precioProducto" placeholder="Precio">
+    <button onclick="agregarProducto()">Agregar</button>
+  </div>
+
+  <div class="section">
+    <h3>Lista de productos</h3>
+    <ul id="listaProductos"></ul>
+  </div>
+
+  <script src="productos.js"></script>
+</body>
+</html>

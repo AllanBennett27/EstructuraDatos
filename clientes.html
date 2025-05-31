@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Clientes</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="pedidos.html">Pedidos</a></li>
+    </ul>
+  </nav>
+
+  <h1>Gestión de Clientes</h1>
+  <div class="section">
+    <input type="text" id="nombreCliente" placeholder="Nombre del cliente">
+    <button onclick="agregarCliente()">Agregar a la cola</button>
+    <button onclick="atenderCliente()">Atender cliente</button>
+    <button onclick="descargarClientes()">Exportar a TXT</button>
+  </div>
+
+  <div class="section">
+    <h3>Clientes en espera</h3>
+    <ul id="listaClientes"></ul>
+  </div>
+
+  <script src="clientes.js"></script>
+</body>
+</html>

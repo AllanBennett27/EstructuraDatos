@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Pedidos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <nav>
+    <ul>
+     <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="pedidos.html">Pedidos</a></li>
+    </ul>
+  </nav>
+
+  <h1>Gestión de Pedidos</h1>
+
+  <div class="section">
+    <label for="clienteSelect">Cliente:</label>
+    <select id="clienteSelect"></select>
+
+    <label for="productoSelect">Producto:</label>
+    <select id="productoSelect"></select>
+
+    <input type="number" id="cantidadProducto" placeholder="Cantidad">
+    <button onclick="agregarProductoPedido()">Agregar al pedido</button>
+    <button onclick="guardarPedido()">Guardar Pedido</button>
+  </div>
+
+  <div class="section">
+    <h3>Productos en el pedido (Pila)</h3>
+    <ul id="pilaPedido"></ul>
+  </div>
+
+  <div class="section">
+    <h3>Historial de Pedidos</h3>
+    <ul id="historialPedidos"></ul>
+  </div>
+
+  <script src="pedidos.js">
+  </script>
+</body>
+</html>
