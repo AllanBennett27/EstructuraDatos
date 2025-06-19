@@ -155,3 +155,41 @@ body {
 .admin-box button:hover {
   background-color: #d35400;
 }
+
+
+
+.descripcion {
+  font-size: 1.2em;
+  color: #5d4037;
+  margin-bottom: 30px;
+}
+
+.stats {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background-color: #fff7f0;
+  border: 1px solid #f4d7c3;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.stat-box h3 {
+  font-size: 2.5em;
+  margin: 0;
+  color: #d35400;
+}
+
+.stat-box p {
+  margin: 10px 0 0;
+  font-weight: bold;
+  color: #6e4c3c;
+}
