@@ -104,3 +104,54 @@ body {
 .navbar a:hover {
   color: #a0522d;
 }
+.factura-box {
+  background-color: #fff9f5;
+  border: 1px solid #ffe0d1;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.factura-box h3 {
+  margin-top: 0;
+  color: #e67e22;
+}
+
+.factura-box ul {
+  padding-left: 20px;
+}
+
+.factura-lista {
+  margin-top: 20px;
+}
+
+
+.admin-box {
+  background-color: #fefaf7;
+  border: 1px solid #ffe0cc;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.admin-box h3 {
+  margin-top: 0;
+  color: #d35400;
+}
+
+.admin-box button {
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  margin: 5px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.admin-box button:hover {
+  background-color: #d35400;
+}

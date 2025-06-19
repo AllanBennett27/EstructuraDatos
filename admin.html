@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zona Admin - First In, First Sweet</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <nav>
+    <ul>
+     <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="pedidos.html">Pedidos</a></li>
+      <li><a href="factura.html">Facturas</a></li>
+      <li><a href="admin.html">Administración</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <h2>Herramientas de administración</h2>
+
+    <section class="admin-box">
+      <h3>Estadísticas del sistema</h3>
+      <p><strong>Total de clientes:</strong> <span id="totalClientes">0</span></p>
+      <p><strong>Total de productos:</strong> <span id="totalProductos">0</span></p>
+      <p><strong>Pedidos realizados:</strong> <span id="totalPedidos">0</span></p>
+      <p><strong>Facturas generadas:</strong> <span id="totalFacturas">0</span></p>
+      <p><strong>Total vendido:</strong> L.<span id="totalVendido">0.00</span></p>
+    </section>
+
+    <section class="admin-box">
+      <h3>Gestión de datos</h3>
+      <button onclick="limpiarClientes()">Borrar clientes</button>
+      <button onclick="limpiarProductos()">Borrar productos</button>
+      <button onclick="limpiarPedidos()">Borrar pedidos</button>
+      <button onclick="limpiarFacturas()">Borrar facturas</button>
+      <button onclick="borrarTodo()">❌ Borrar todo</button>
+    </section>
+  </main>
+
+  <script>
+    function limpiarClientes() {
+      localStorage.removeItem("clientes");
+      alert("Clientes borrados.");
+      location.reload();
+    }
+
+    function limpiarProductos() {
+      localStorage.removeItem("productos");
+      alert("Productos borrados.");
+      location.reload();
+    }
+
+    function limpiarPedidos() {
+      localStorage.removeItem("pedidos");
+      alert("Pedidos borrados.");
+      location.reload();
+    }
+
+    function limpiarFacturas() {
+      localStorage.removeItem("facturas");
+      alert("Facturas borradas.");
+      location.reload();
+    }
+
+    function borrarTodo() {
+      limpiarClientes();
+      limpiarProductos();
+      limpiarPedidos();
+      limpiarFacturas();
+    }
+
+    // Estadísticas
+    const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+    const productos = JSON.parse(localStorage.getItem("productos")) || [];
+    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const facturas = JSON.parse(localStorage.getItem("facturas")) || [];
+
+    document.getElementById("totalClientes").textContent = clientes.length;
+    document.getElementById("totalProductos").textContent = productos.length;
+    document.getElementById("totalPedidos").textContent = pedidos.length;
+    document.getElementById("totalFacturas").textContent = facturas.length;
+
+    let total = 0;
+    facturas.forEach(f => {
+      total += f.total || 0;
+    });
+
+    document.getElementById("totalVendido").textContent = total.toFixed(2);
+  </script>
+</body>
+</html>

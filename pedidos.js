@@ -49,12 +49,21 @@ function mostrarPila() {
 
 function guardarPedido() {
   if (pila.length > 0) {
-    const cliente = clienteSelect.value;
-    pedidos.push({ cliente, productos: [...pila] });
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
-    pila = [];
-    mostrarPila();
-    mostrarHistorial();
+   const cliente = clienteSelect.value;
+const productosFactura = pila.map(p => ({ ...p })); // copia profunda
+
+// Primero generamos la factura con los productos correctos
+generarFactura(cliente, productosFactura);
+
+// Luego guardamos el pedido
+pedidos.push({ cliente, productos: productosFactura });
+localStorage.setItem("pedidos", JSON.stringify(pedidos));
+
+// Limpiamos pila y refrescamos
+pila = [];
+mostrarPila();
+mostrarHistorial();
+
   }
 }
 
@@ -71,3 +80,79 @@ function mostrarHistorial() {
 
 cargarDatos();
 mostrarHistorial();
+// ===============================
+// Estructura de Lista Enlazada
+// ===============================
+
+class NodoFactura {
+  constructor(factura) {
+    this.factura = factura;
+    this.siguiente = null;
+  }
+}
+
+class ListaFacturas {
+  constructor() {
+    this.cabeza = null;
+  }
+
+  agregarFactura(factura) {
+    const nuevoNodo = new NodoFactura(factura);
+    if (!this.cabeza) {
+      this.cabeza = nuevoNodo;
+    } else {
+      let actual = this.cabeza;
+      while (actual.siguiente) {
+        actual = actual.siguiente;
+      }
+      actual.siguiente = nuevoNodo;
+    }
+  }
+
+  recorrer(callback) {
+    let actual = this.cabeza;
+    while (actual) {
+      callback(actual.factura);
+      actual = actual.siguiente;
+    }
+  }
+
+  toArray() {
+    const array = [];
+    let actual = this.cabeza;
+    while (actual) {
+      array.push(actual.factura);
+      actual = actual.siguiente;
+    }
+    return array;
+  }
+
+  cargarDesdeArray(array) {
+    array.forEach(f => this.agregarFactura(f));
+  }
+}
+
+// ===============================
+// Facturación conectada a pedidos
+// ===============================
+
+const listaFacturas = new ListaFacturas();
+const facturasGuardadas = JSON.parse(localStorage.getItem("facturas")) || [];
+listaFacturas.cargarDesdeArray(facturasGuardadas);
+
+function generarFactura(cliente, productos) {
+  const numero = facturasGuardadas.length + 1;
+  const fecha = new Date().toLocaleString();
+  const total = productos.reduce((sum, p) => sum + p.precio * p.cantidad, 0);
+
+  const factura = {
+    numero,
+    cliente,
+    fecha,
+    productos,
+    total
+  };
+
+  listaFacturas.agregarFactura(factura);
+  localStorage.setItem("facturas", JSON.stringify(listaFacturas.toArray()));
+}

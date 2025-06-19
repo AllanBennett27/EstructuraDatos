@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Facturas - First In, First Sweet</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <nav>
+    <ul>
+     <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="pedidos.html">Pedidos</a></li>
+      <li><a href="factura.html">Facturas</a></li>
+      <li><a href="admin.html">Administración</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <h1>Historial de Facturas</h1>
+    <div id="contenedorFacturas" class="factura-lista"></div>
+  </main>
+
+  <script>
+    class NodoFactura {
+      constructor(factura) {
+        this.factura = factura;
+        this.siguiente = null;
+      }
+    }
+
+    class ListaFacturas {
+      constructor() {
+        this.cabeza = null;
+      }
+
+      agregarFactura(factura) {
+        const nuevoNodo = new NodoFactura(factura);
+        if (!this.cabeza) {
+          this.cabeza = nuevoNodo;
+        } else {
+          let actual = this.cabeza;
+          while (actual.siguiente) {
+            actual = actual.siguiente;
+          }
+          actual.siguiente = nuevoNodo;
+        }
+      }
+
+      recorrer(callback) {
+        let actual = this.cabeza;
+        while (actual) {
+          callback(actual.factura);
+          actual = actual.siguiente;
+        }
+      }
+
+      cargarDesdeArray(array) {
+        array.forEach(f => this.agregarFactura(f));
+      }
+    }
+
+    const listaFacturas = new ListaFacturas();
+    const facturasGuardadas = JSON.parse(localStorage.getItem("facturas")) || [];
+    listaFacturas.cargarDesdeArray(facturasGuardadas);
+
+    function mostrarFacturas() {
+      const contenedor = document.getElementById("contenedorFacturas");
+      contenedor.innerHTML = "";
+
+      listaFacturas.recorrer(factura => {
+        const div = document.createElement("div");
+        div.classList.add("factura-box");
+
+        let productosHTML = "";
+        factura.productos.forEach(p => {
+          productosHTML += `<li>${p.cantidad} x ${p.nombre} - L.${(p.precio * p.cantidad).toFixed(2)}</li>`;
+        });
+
+        div.innerHTML = `
+          <h3>Factura #${factura.numero}</h3>
+          <p><strong>Cliente:</strong> ${factura.cliente}</p>
+          <p><strong>Fecha:</strong> ${factura.fecha}</p>
+          <ul>${productosHTML}</ul>
+          <p><strong>Total:</strong> L.${factura.total.toFixed(2)}</p>
+          <hr/>
+        `;
+        contenedor.appendChild(div);
+      });
+    }
+
+    mostrarFacturas();
+  </script>
+</body>
+</html>
