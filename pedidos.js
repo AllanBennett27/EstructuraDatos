@@ -80,6 +80,8 @@ function mostrarHistorial() {
 
 cargarDatos();
 mostrarHistorial();
+
+
 // ===============================
 // Estructura de Lista Enlazada
 // ===============================
