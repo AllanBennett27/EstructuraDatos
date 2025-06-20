@@ -14,7 +14,7 @@ function cargarDatos() {
   if (clienteAtendido) {
     clienteSelect.innerHTML = `<option value="${clienteAtendido}">${clienteAtendido}</option>`;
     clienteSelect.value = clienteAtendido;
-    localStorage.removeItem("clienteActual"); // Evitar duplicación
+    localStorage.removeItem("clienteActual");
   } else {
     clienteSelect.innerHTML = clientes.map(c => `<option value="${c}">${c}</option>`).join("");
   }
@@ -32,34 +32,38 @@ function agregarProductoPedido() {
     pila.push({ nombre: prod.nombre, precio: prod.precio, cantidad });
     mostrarPila();
   }
+  
 }
-
 function mostrarPila() {
   const lista = document.getElementById("pilaPedido");
   lista.innerHTML = "";
-  pila
-    .slice()
-    .reverse()
-    .forEach(p => {
-      const li = document.createElement("li");
-      li.textContent = `${p.cantidad} x ${p.nombre} (L.${(p.precio * p.cantidad).toFixed(2)})`;
-      lista.appendChild(li);
-    });
+
+  pila.forEach((p, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${p.cantidad} x ${p.nombre} (L.${(p.precio * p.cantidad).toFixed(2)}) `;
+
+    const btnEliminar = document.createElement("button");
+    btnEliminar.textContent = "Eliminar";
+    btnEliminar.style.marginLeft = "10px";
+    btnEliminar.onclick = () => eliminarProductoDePila(index);
+
+    li.appendChild(btnEliminar);
+    lista.appendChild(li);
+  });
 }
+function eliminarProductoDePila(indice) {
+  pila.splice(indice, 1); 
+  mostrarPila();
+}
+
 
 function guardarPedido() {
   if (pila.length > 0) {
    const cliente = clienteSelect.value;
-const productosFactura = pila.map(p => ({ ...p })); // copia profunda
-
-// Primero generamos la factura con los productos correctos
+const productosFactura = pila.map(p => ({ ...p }));
 generarFactura(cliente, productosFactura);
-
-// Luego guardamos el pedido
 pedidos.push({ cliente, productos: productosFactura });
 localStorage.setItem("pedidos", JSON.stringify(pedidos));
-
-// Limpiamos pila y refrescamos
 pila = [];
 mostrarPila();
 mostrarHistorial();
